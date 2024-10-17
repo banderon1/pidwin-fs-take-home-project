@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
 import userRouter from "./src/api/user.js";
+import lucky7 from "./src/utils/lucky7.js";
 
 dotenv.config();
 
@@ -22,3 +23,5 @@ mongoose
     app.listen(PORT, () => console.log(`Server Started On Port ${PORT}`))
   )
   .catch((error) => console.log(error.message));
+
+lucky7();
