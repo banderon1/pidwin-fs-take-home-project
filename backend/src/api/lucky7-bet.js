@@ -3,6 +3,7 @@ import Lucky7Bet from "../models/lucky7-bet.js";
 import User from "../models/user.js";
 
 const lucky7Bet = async (req, res) => {
+  //TOOD: get the userId from the token here; it can be spoofed by the client
   const { userId, isLucky } = req.body;
 
   try {

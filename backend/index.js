@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
+import lucky7Router from "./src/api/lucky7.js";
 import userRouter from "./src/api/user.js";
 import lucky7 from "./src/utils/lucky7.js";
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ limit: "5mb", extended: true }));
 
 app.use(cors());
 app.use("/api/user", userRouter);
+app.use("/api/lucky7", lucky7Router);
 
 const PORT = process.env.PORT || 5000;
 

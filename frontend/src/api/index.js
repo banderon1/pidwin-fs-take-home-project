@@ -15,3 +15,4 @@ export const changePassword = (formData) =>
   API.post("/api/user/changePassword", formData);
 
 export const lucky7Bet = (formData) => API.post("/api/user/lucky7/bet", formData);
+export const winners = (formData) => API.get("/api/lucky7/winners", formData);

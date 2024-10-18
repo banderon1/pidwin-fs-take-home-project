@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
-import { lucky7 } from "../../actions/lucky7";
+import { lucky7, winners } from "../../actions/lucky7";
 
 const Navbar = () => {
   const [user, setUser] = useState(
@@ -26,6 +26,10 @@ const Navbar = () => {
   const lucky7Bet = async (isLucky) => {
     const { _id } = jwtDecode(JSON.parse(localStorage.getItem("profile")).token);
     dispatch(lucky7({userId: _id, isLucky}, history));
+  };
+
+  const getWinners = async () => {
+    dispatch(winners(history));
   };
 
   useEffect(() => {
@@ -105,6 +109,13 @@ const Navbar = () => {
           </Button>
         )}
       </Toolbar>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => getWinners()}
+      >
+        Update Winners
+      </Button>
     </AppBar>
   );
 };
