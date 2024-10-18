@@ -6,6 +6,7 @@ import { jwtDecode } from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
 import { lucky7, winners } from "../../actions/lucky7";
+import { io } from "https://cdn.socket.io/4.7.5/socket.io.esm.min.js";
 
 const Navbar = () => {
   const [user, setUser] = useState(
@@ -33,6 +34,10 @@ const Navbar = () => {
 
   useEffect(() => {
     if (user !== "null" && user !== null) {
+      const socket = io("http://localhost:5002");
+      socket.on(`lucky7Message${user._id}`, (msg, serverOffset) => {
+        alert(msg);
+      });
       if (user.exp * 1000 < new Date().getTime()) logout();
     }
     setUser(

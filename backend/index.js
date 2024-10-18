@@ -1,5 +1,7 @@
 import express from "express";
+import http from "http";
 import mongoose from "mongoose";
+import { Server } from 'socket.io';
 import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from 'dotenv';
@@ -26,4 +28,16 @@ mongoose
   )
   .catch((error) => console.log(error.message));
 
-lucky7();
+const server = http.createServer(app);
+const io = new Server(server);
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+server.listen(5002, () => {
+  console.log(`io server running on port 5002`);
+});
+
+lucky7(io);

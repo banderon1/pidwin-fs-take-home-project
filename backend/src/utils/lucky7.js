@@ -6,7 +6,7 @@ function randomDiceValue() {
   return Math.floor(Math.random() * 6 + 1);
 }
 
-const lucky7 = async (req, res, next) => {
+const lucky7 = async (io) => {
   setInterval(async function() {
     const previousGame = await Lucky7.findOne({}, {}, { sort: { 'createdAt' : -1 } });
 
@@ -20,10 +20,14 @@ const lucky7 = async (req, res, next) => {
     const isLucky = result.value1 + result.value2 === 7;
     const bets = await Lucky7Bet.find({ previousLucky7Id: previousGame._id })
     bets.forEach(async bet => {
-      const user = await User.findOne({ _id: bet.userId });
+      const { userId } = bet;
+      const user = await User.findOne({ _id: userId });
+
       if (isLucky === bet.isLucky) {
+        io.emit(`lucky7Message${userId}`, "win");
         user.lucky7Streak += 1;
       } else {
+        io.emit(`lucky7Message${userId}`, "lose");
         user.lucky7Streak = 0;
       }
       await user.save();
