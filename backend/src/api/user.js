@@ -11,6 +11,6 @@ router.post("/login", login);
 router.post("/signup", signup);
 router.post("/changePassword", auth, changePassword);
 
-router.post("/lucky7/bet", lucky7Bet);
+router.post("/lucky7/bet", auth, lucky7Bet);
 
 export default router;

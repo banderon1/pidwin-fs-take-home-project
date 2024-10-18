@@ -1,18 +1,11 @@
 import Lucky7 from "../models/lucky7.js";
 import Lucky7Bet from "../models/lucky7-bet.js";
-import User from "../models/user.js";
 
 const lucky7Bet = async (req, res) => {
-  //TOOD: get the userId from the token here; it can be spoofed by the client
-  const { userId, isLucky } = req.body;
+  const { userId } = req;
+  const { isLucky } = req.body;
 
   try {
-    const existingUser = await User.findOne({ _id: userId });
-
-    if (!existingUser) {
-      return res.status(404).json({ message: "User Does Not Exist" });
-    }
-
     const previousGame = await Lucky7.findOne({}, {}, { sort: { 'createdAt' : -1 } });
 
     if (!previousGame) {

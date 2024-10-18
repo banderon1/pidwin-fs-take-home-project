@@ -24,8 +24,7 @@ const Navbar = () => {
   };
 
   const lucky7Bet = async (isLucky) => {
-    const { _id } = jwtDecode(JSON.parse(localStorage.getItem("profile")).token);
-    dispatch(lucky7({userId: _id, isLucky}, history));
+    dispatch(lucky7({isLucky}, history));
   };
 
   const getWinners = async () => {
