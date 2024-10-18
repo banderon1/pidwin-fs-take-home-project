@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import * as actionType from "../../constants/actionTypes";
 import { styles } from "./styles";
+import { lucky7 } from "../../actions/lucky7";
 
 const Navbar = () => {
   const [user, setUser] = useState(
@@ -20,6 +21,11 @@ const Navbar = () => {
     dispatch({ type: actionType.LOGOUT });
     history("/auth");
     setUser("null");
+  };
+
+  const lucky7Bet = async (isLucky) => {
+    const { _id } = jwtDecode(JSON.parse(localStorage.getItem("profile")).token);
+    dispatch(lucky7({userId: _id, isLucky}, history));
   };
 
   useEffect(() => {
@@ -43,7 +49,7 @@ const Navbar = () => {
           variant="h5"
           align="center"
         >
-          CoinToss
+          Lucky7
         </Typography>
       </div>
       <Toolbar sx={styles.toolbar}>
@@ -71,6 +77,21 @@ const Navbar = () => {
               }}
             >
               Set Password
+            </Button>
+            <br/>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => lucky7Bet(true)}
+            >
+              Next Bet Lucky!
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => lucky7Bet(false)}
+            >
+              Next Bet Not Lucky!
             </Button>
           </div>
         ) : (
